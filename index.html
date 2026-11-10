@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mercado e Receitas</title>
+<style>
+:root{--bg:#0e130b;--card:rgba(24,33,20,.86);--tx:#eef2e4;--mu:#a3ad92;--ac:#a3b565;--ac2:#4f6b2a;--acs:#243019;--ok:#9bd36b;--bd:#2e3a26;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+
+
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:radial-gradient(70% 35% at 95% 0%,rgba(110,140,60,.22),transparent 70%),radial-gradient(60% 30% at 0% 100%,rgba(79,107,42,.18),transparent 70%),var(--bg);background-attachment:fixed;color:var(--tx);font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+.hero{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;margin-bottom:14px;border-radius:18px;background:radial-gradient(120% 140% at 100% 0%,#2f4219 0%,#18211a 60%);border:1px solid var(--bd)}
+.hero h1{margin:0}.hero p{margin:4px 0 0}.hero svg{flex:none}
+main{max-width:680px;margin:0 auto;padding:16px;position:relative;z-index:1}
+.bg{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.b{position:absolute;right:-30px;bottom:20px;width:340px;height:340px;fill:none;stroke:var(--ac);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;opacity:0;transition:opacity .5s}
+body[data-t="1"] .b1,body[data-t="2"] .b2,body[data-t="3"] .b3{opacity:.2}
+h1{font-size:1.4rem;margin:4px 0 12px}
+.tabs{display:flex;gap:8px;margin-bottom:14px}
+.tabs button,.chip,.flt{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:999px;padding:8px 14px;font:inherit;cursor:pointer}
+.tabs button{flex:1;border-radius:12px;font-weight:600;font-size:.9rem;padding:8px 6px}
+.on{background:var(--ac2)!important;color:#fff!important;border-color:var(--ac)!important}
+.card{background:var(--card);border:1px solid var(--bd);border-left:3px solid var(--ac2);border-radius:14px;padding:12px 14px;margin-bottom:12px;box-shadow:0 6px 18px rgba(79,107,42,.18)}
+h2{font-size:1rem;margin:0 0 6px;color:var(--ac)}
+.row{display:flex;align-items:center;gap:10px;padding:6px 0;border-top:1px solid var(--bd)}
+.row:first-of-type{border-top:0}
+.row label{flex:1;display:flex;gap:10px;align-items:center;cursor:pointer}
+.row input[type=checkbox]{width:20px;height:20px;accent-color:var(--ac)}
+.row small{color:var(--mu)}
+.done{text-decoration:line-through;color:var(--mu)}
+.row input[type=number]{width:70px;padding:5px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}
+.sum{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:8px 0;z-index:5}
+.bar{height:10px;background:var(--bd);border-radius:9px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#4f6b2a,#a3b565);width:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px}
+.chip{padding:6px 12px}
+.flt{padding:5px 12px;margin-right:6px}
+details{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:10px 14px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:600}
+.tag{font-size:.78rem;border-radius:999px;padding:2px 8px;background:var(--acs);color:var(--ac);margin-left:6px;font-weight:500}
+.go{background:var(--ok);color:#052e16}
+ol{margin:8px 0 0;padding-left:20px}
+.mu{color:var(--mu);font-size:.9rem}
+.hide{display:none}
+.in{padding:8px 10px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font:inherit;min-width:0}
+</style>
+</head>
+<body data-t="1">
+<div class="bg" aria-hidden="true">
+<svg class="b b1" viewBox="0 0 200 200"><path d="M20 60h28l14 70h86l14-52H56"/><circle cx="76" cy="160" r="11"/><circle cx="142" cy="160" r="11"/><path d="M85 48c20-14 44-4 42 20-24 6-44-2-42-20z"/><path d="M135 38c14-8 30 2 28 16-16 4-28-4-28-16z"/><path d="M105 52c8 6 14 10 20 12"/></svg>
+<svg class="b b2" viewBox="0 0 200 200"><circle cx="90" cy="125" r="55"/><circle cx="90" cy="125" r="40"/><path d="M145 125h48"/><path d="M60 50c-8-10 8-16 0-28M90 50c-8-10 8-16 0-28M120 50c-8-10 8-16 0-28"/></svg>
+<svg class="b b3" viewBox="0 0 200 200"><path d="M25 110L100 45l75 65"/><path d="M42 98v80h116V98"/><path d="M90 178v-48h24v48"/><circle cx="150" cy="34" r="14"/><circle cx="180" cy="64" r="8"/><circle cx="122" cy="20" r="6"/></svg>
+</div>
+<main>
+<header class="hero"><div><h1>Mercado e Receitas</h1><p class="mu">Compras do mês, receitas do dia e itens da casa</p></div><svg viewBox="0 0 120 90" width="96" height="72" aria-hidden="true"><circle cx="100" cy="14" r="5" fill="#a3b565" opacity=".7"/><circle cx="14" cy="22" r="3" fill="#6f8a3a"/><path d="M104 40l2 4 4 2-4 2-2 4-2-4-4-2 4-2z" fill="#dfe8c8"/><path d="M20 24h14l8 34h42l8-26H38" fill="none" stroke="#a3b565" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="48" cy="72" r="6" fill="#6f8a3a"/><circle cx="80" cy="72" r="6" fill="#6f8a3a"/></svg></header>
+<div class="tabs"><button id="t1" class="on">🛒 Lista de compras</button><button id="t2">🍳 O que cozinhar?</button><button id="t3">🏠 Casa</button></div>
+
+<div class="sum card" id="sumc"><b id="tot"></b><div class="bar"><i id="barf"></i></div><div class="mu" id="sub"></div></div>
+<section id="p1">
+<div id="lista"></div>
+<button class="flt" id="reset">Limpar marcações</button>
+<p class="mu">Valores estimados. Edite o preço de cada item conforme o mercado.</p>
+</section>
+
+<section id="p2" class="hide">
+<p class="mu">Marque o que você tem em casa. Sal, óleo e temperos básicos já contam como disponíveis.</p>
+<div class="chips" id="chips"></div>
+<div style="margin-bottom:12px"><button class="flt on" data-t="15">até 15 min</button><button class="flt" data-t="30">até 30 min</button><button class="flt" data-t="99">todas</button></div>
+<div id="recs"></div>
+</section>
+
+<section id="p3" class="hide">
+<p class="mu">Itens da casa e de higiene, fora comida. Entram no mesmo orçamento de R$350 da comida.</p>
+<div class="card"><div style="display:flex;gap:8px"><input id="gn" class="in" type="text" placeholder="Ex.: detergente" style="flex:1" aria-label="Item"><input id="gpr" class="in" type="number" min="0" step="1" placeholder="R$" style="width:70px" aria-label="Preço estimado"><button class="chip on" id="gadd">Adicionar</button></div></div>
+<div class="chips" id="gq"></div>
+<div class="mu" id="gsum" style="margin-bottom:8px"></div>
+<div id="gl"></div>
+<button class="flt" id="gclr">Remover itens marcados</button>
+</section>
+</main>
+<script>
+var BUDGET=350,KEY="mercado-v2";
+var L=[
+["🍚 Despensa",[["Arroz 2 kg",12],["Macarrão (2 pacotes)",10],["Farinha de trigo 1 kg",6],["Granola",14],["Óleo",8],["Molho de tomate (3 sachês)",6],["Temperos e caldos",10]]],
+["🍗 Proteínas",[["Sassami 1,2 kg",30],["Peito de frango inteiro 800 g",16],["Ovos (30)",22],["Carne moída 500 g",18],["Linguiça 400 g",13]]],
+["🥕 Hortifrúti (compra grande)",[["Cebola",5],["Alho",4],["Batata",7],["Batata-doce",6],["Cenoura",4],["Limão",4],["Couve (1 maço)",5]]],
+["🍅 Reposição do dia 15",[["Folhas",6],["Tomate",9],["Banana",8],["Fruta da estação",14]]],
+["🥛 Laticínios",[["Iogurte",22],["Leite 3 L",18],["Muçarela 300 g",18],["Creme de leite (2 caixinhas)",7]]]
+];
+var ING=["ovo","sassami","frango desfiado","carne moída","linguiça","macarrão","arroz","batata","batata-doce","cebola","alho","molho de tomate","muçarela","leite","creme de leite","farinha","couve"];
+var R=[
+["Omelete recheado",10,["ovo"],"Frigideira ou micro-ondas",["Bata 2 a 3 ovos com sal.","Despeje em frigideira untada, fogo médio.","Recheie com queijo, tomate, espinafre ou frango desfiado e dobre."]],
+["Frango desfiado com muçarela sobre arroz",10,["frango desfiado","muçarela","arroz"],"Micro-ondas",["Descongele o frango desfiado no micro-ondas.","Cubra o arroz com frango e muçarela.","Leve 1 min ao micro-ondas até derreter."]],
+["Macarrão alho e óleo com ovo",15,["macarrão","alho","ovo"],"Fogão",["Cozinhe o macarrão.","Doure o alho fatiado no óleo e misture ao macarrão.","Finalize com ovo frito por cima."]],
+["Sassami acebolado com arroz",20,["sassami","cebola","arroz"],"Fogão",["Tempere o sassami com sal, alho e limão.","Doure na frigideira e junte a cebola em rodelas.","Sirva com arroz."]],
+["Sassami empanado na air fryer",20,["sassami","ovo","farinha"],"Air fryer",["Passe o sassami na farinha, no ovo batido e na granola triturada ou farinha de rosca.","Borrife óleo.","Air fryer a 200 °C por 12 a 15 min, virando na metade."]],
+["Couve refogada com alho e ovo",15,["couve","alho","ovo"],"Fogão",["Corte a couve em tiras finas.","Doure o alho no óleo e refogue a couve 3 a 4 min.","Junte 1 ou 2 ovos mexidos ou fritos por cima."]],
+["Panqueca recheada",25,["farinha","ovo","leite","frango desfiado","muçarela"],"Fogão",["Bata 1 ovo, 1/2 xícara de leite e 1/2 de farinha.","Frite finas na frigideira.","Recheie com frango e muçarela e dobre."]],
+["Carne moída refogada com couve",25,["carne moída","couve","cebola","alho"],"Fogão",["Refogue cebola e alho.","Junte a carne moída até secar.","Adicione a couve em tiras e refogue até murchar."]],
+["Strogonoff de sassami",30,["sassami","molho de tomate","creme de leite","cebola"],"Fogão",["Doure o sassami em cubos com cebola.","Junte o molho de tomate e deixe apurar 5 min.","Desligue o fogo e misture o creme de leite."]],
+["Macarrão à bolonhesa",30,["macarrão","carne moída","molho de tomate","cebola"],"Fogão",["Refogue cebola e a carne moída.","Adicione o molho e deixe apurar 10 min.","Misture ao macarrão."]],
+["Arroz com linguiça e ovo frito",20,["arroz","linguiça","ovo"],"Fogão",["Frite a linguiça em rodelas.","Junte o arroz já cozido e misture até aquecer.","Sirva com ovo frito por cima."]],
+["Linguiça com batata na air fryer",30,["linguiça","batata","cebola"],"Air fryer",["Corte batata, cebola e linguiça.","Tempere com sal e óleo.","Air fryer a 200 °C por 20 a 25 min, mexendo uma vez."]],
+["Escondidinho de batata-doce",40,["batata-doce","frango desfiado","muçarela"],"Micro-ondas e air fryer",["Cozinhe a batata-doce no micro-ondas e amasse.","Monte frango desfiado, purê e muçarela em forma pequena.","Air fryer a 180 °C por 10 a 15 min."]]
+];
+var S={c:{},p:{},h:{}},T=15;
+try{var s=JSON.parse(localStorage.getItem(KEY));if(s)S=s}catch(e){}
+if(!S.g)S.g=[];
+var FE=0,FC=0;
+function drawSum(){
+ var ge=0,gc=0;S.g.forEach(function(it){ge+=it.p||0;if(it.d)gc+=it.p||0});
+ var est=FE+ge,car=FC+gc;
+ document.getElementById("tot").textContent="Carrinho: "+brl(car)+" de "+brl(est)+" estimados";
+ document.getElementById("sub").textContent="Orçamento do mês: "+brl(BUDGET)+" · Comida "+brl(FE)+" · Casa "+brl(ge)+" · Folga: "+brl(BUDGET-est);
+ var b=document.getElementById("barf");b.style.width=Math.min(100,car/BUDGET*100)+"%";b.style.background=est>BUDGET?"#c0392b":"";
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function brl(n){return "R$ "+n.toFixed(2).replace(".",",")}
+function price(k,d){return S.p[k]!=null?S.p[k]:d}
+function drawList(){
+ var h="",est=0,car=0;
+ L.forEach(function(sec,i){
+  h+='<div class="card"><h2>'+sec[0]+'</h2>';
+  sec[1].forEach(function(it,j){
+   var k=i+"-"+j,p=price(k,it[1]);est+=p;if(S.c[k])car+=p;
+   h+='<div class="row"><label><input type="checkbox" data-k="'+k+'"'+(S.c[k]?" checked":"")+'><span class="'+(S.c[k]?"done":"")+'">'+it[0]+'</span></label><input type="number" min="0" step="1" value="'+p+'" data-p="'+k+'" aria-label="Preço"></div>';
+  });
+  h+='</div>';
+ });
+ document.getElementById("lista").innerHTML=h;
+ FE=est;FC=car;drawSum();
+ 
+ 
+}
+document.getElementById("lista").addEventListener("change",function(e){
+ var t=e.target;
+ if(t.dataset.k){S.c[t.dataset.k]=t.checked;save();drawList()}
+ else if(t.dataset.p){S.p[t.dataset.p]=parseFloat(t.value)||0;save();drawList()}
+});
+document.getElementById("reset").onclick=function(){S.c={};save();drawList()};
+function drawChips(){
+ document.getElementById("chips").innerHTML=ING.map(function(n){return '<button class="chip'+(S.h[n]?" on":"")+'" data-i="'+n+'">'+n+'</button>'}).join("");
+}
+document.getElementById("chips").addEventListener("click",function(e){
+ var n=e.target.dataset.i;if(!n)return;S.h[n]=!S.h[n];save();drawChips();drawRecs();
+});
+function drawRecs(){
+ var any=ING.some(function(n){return S.h[n]});
+ var list=R.filter(function(r){return r[1]<=T}).map(function(r){
+  var miss=r[2].filter(function(n){return !S.h[n]});return {r:r,m:miss}
+ });
+ if(any)list=list.filter(function(x){return x.m.length<x.r[2].length});
+ list.sort(function(a,b){return a.m.length-b.m.length||a.r[1]-b.r[1]});
+ var h=list.map(function(x){
+  var r=x.r,tag=!any?"":x.m.length?'<span class="tag">falta: '+x.m.join(", ")+'</span>':'<span class="tag go">dá pra fazer</span>';
+  return '<details><summary>'+(/Air fryer/.test(r[3])?"🌀 ":/Micro/.test(r[3])?"⚡ ":"🔥 ")+r[0]+' · '+r[1]+' min'+tag+'</summary><div class="mu">'+r[3]+' · Precisa de: '+r[2].join(", ")+'</div><ol>'+r[4].map(function(p){return "<li>"+p+"</li>"}).join("")+'</ol></details>';
+ }).join("");
+ document.getElementById("recs").innerHTML=h||'<p class="mu">Nenhuma receita com esses ingredientes nesse tempo. Tente outro filtro.</p>';
+}
+document.querySelectorAll(".flt[data-t]").forEach(function(b){b.onclick=function(){
+ T=+b.dataset.t;document.querySelectorAll(".flt[data-t]").forEach(function(x){x.classList.toggle("on",x===b)});drawRecs();
+}});
+function tab(n){
+ document.getElementById("p1").classList.toggle("hide",n!=1);document.getElementById("p2").classList.toggle("hide",n!=2);document.getElementById("p3").classList.toggle("hide",n!=3);document.getElementById("sumc").classList.toggle("hide",n==2);document.body.setAttribute("data-t",n);
+ document.getElementById("t1").classList.toggle("on",n==1);document.getElementById("t2").classList.toggle("on",n==2);document.getElementById("t3").classList.toggle("on",n==3);
+}
+document.getElementById("t1").onclick=function(){tab(1)};
+document.getElementById("t2").onclick=function(){tab(2)};
+document.getElementById("t3").onclick=function(){tab(3)};
+var QUICK=["Papel higiênico","Detergente","Sabão em pó","Esponja","Saco de lixo","Shampoo","Sabonete","Pasta de dente"];
+function esc(s){return s.replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function drawHome(){
+ var h=S.g.map(function(it,i){return '<div class="row"><label><input type="checkbox" data-g="'+i+'"'+(it.d?" checked":"")+'><span class="'+(it.d?"done":"")+'">'+esc(it.n)+'</span></label><input type="number" min="0" step="1" value="'+(it.p||0)+'" data-gp="'+i+'" aria-label="Preço"><button class="flt" data-x="'+i+'" aria-label="Remover">✕</button></div>'}).join("");
+ var tot=0,got=0;S.g.forEach(function(it){tot+=it.p||0;if(it.d)got+=it.p||0});
+ document.getElementById("gl").innerHTML=h?'<div class="card">'+h+'</div>':'<p class="mu">Nenhum item ainda. Adicione acima.</p>';
+ document.getElementById("gsum").textContent=S.g.length?"Casa no carrinho: "+brl(got)+" de "+brl(tot)+" estimados":"";
+ drawSum();
+}
+function addG(name,pr){
+ var n=document.getElementById("gn"),p=document.getElementById("gpr");
+ var v=(name||n.value).trim();if(!v)return;
+ S.g.push({n:v,p:pr!=null?pr:(parseFloat(p.value)||0),d:false});
+ if(!name){n.value="";p.value="";n.focus()}
+ save();drawHome();
+}
+document.getElementById("gq").innerHTML=QUICK.map(function(q){return '<button class="chip" data-q="'+q+'">+ '+q+'</button>'}).join("");
+document.getElementById("gq").addEventListener("click",function(e){var q=e.target.getAttribute("data-q");if(q)addG(q,0)});
+document.getElementById("gadd").onclick=function(){addG()};
+document.getElementById("gn").addEventListener("keydown",function(e){if(e.key==="Enter")addG()});
+document.getElementById("gl").addEventListener("change",function(e){
+ var t=e.target;
+ if(t.hasAttribute("data-g"))S.g[+t.getAttribute("data-g")].d=t.checked;
+ else if(t.hasAttribute("data-gp"))S.g[+t.getAttribute("data-gp")].p=parseFloat(t.value)||0;
+ save();drawHome();
+});
+document.getElementById("gl").addEventListener("click",function(e){
+ var x=e.target.getAttribute("data-x");
+ if(x!==null){S.g.splice(+x,1);save();drawHome()}
+});
+document.getElementById("gclr").onclick=function(){S.g=S.g.filter(function(i){return !i.d});save();drawHome()};
+drawList();drawChips();drawRecs();drawHome();
+</script>
+</body>
+</html>
